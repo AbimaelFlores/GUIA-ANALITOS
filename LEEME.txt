@@ -1,0 +1,63 @@
+GUÍA DE TUBOS · HGR No. 36 · Laboratorio Clínico-URGENCIAS
+==========================================================
+Abrir: doble clic en index.html (funciona sin internet; solo la tipografía usa Google Fonts y tiene respaldo).
+
+ESTRUCTURA
+  index.html          Página principal
+  css/estilos.css     Estilos
+  js/app.js           Lógica (no hace falta modificarlo)
+  datos/indice.js     Lista de archivos de tubos y analitos
+  datos/tubos/        Un archivo por tubo
+  datos/analitos/     Un archivo por analito
+  img/                logo_imss.png, central.jpg
+  img/tubos/          Imágenes de tubos     (<id>.png)
+  img/analitos/       Imágenes de analitos  (<id>.png)
+
+AGREGAR UN ANALITO
+  1. Copia datos/_plantilla_analito.js a datos/analitos/mi-analito.js y edítalo.
+  2. Añade "datos/analitos/mi-analito.js" en datos/indice.js.
+  Si el "area" del analito es distinta al área del tubo, el simulador agrega un tubo extra.
+
+AGREGAR UN TUBO
+  1. Copia datos/_plantilla_tubo.js a datos/tubos/mi-tubo.js y edítalo.
+  2. Añádelo en datos/indice.js (sección tubos).
+
+IMÁGENES
+  Opción A: guarda la imagen como img/tubos/<id>.png o img/analitos/<id>.png (se detecta sola).
+  Opción B: escribe otra ruta en el campo  imagen: "img/analitos/foto.jpg"  del archivo de datos.
+  Si no hay imagen, se muestra una ilustración con el color del tubo.
+
+NOVEDADES
+  - Tubo alterno: en el archivo del analito, campo  tuboAlterno: "amarillo".
+  - Tubos verde y gris desactivados: sus archivos están en datos/_inactivos/ (para reactivarlos, devuélvelos a datos/tubos/ y añádelos a datos/indice.js).
+  - Pestaña SOLICITUD Y RECEPCIÓN: editar criterios en datos/solicitud.js; imágenes en img/solicitud/.
+
+CELULAR Y USO SIN CONEXIÓN
+  - En pantallas pequeñas el menú pasa a una barra inferior de 4 pestañas y los botones son más grandes.
+  - manifest.webmanifest y sw.js permiten "Agregar a pantalla de inicio" y usarla sin conexión,
+    pero solo cuando la carpeta se aloja en un servidor web (http/https). Abierta con doble clic funciona igual, sin modo sin conexión.
+  - Si cambias archivos y ya la habías abierto desde un servidor, sube el número de VERSION en sw.js.
+
+
+=== CAMBIOS DE LA VERSIÓN 4 ===
+- 251 analitos/pruebas (Excel "Relación estudios de laboratorio" + docx "Analitos y abreviaturas Urgencias").
+  Cada analito tiene: tubo, tuboAlterno (opcional), area, envio (true/false) y categorias:
+  "ordinario" (ESTUDIOS ORDINARIOS) y/o "urgencias" (ESTUDIOS DE URGENCIAS).
+- Tubo azul: el volumen mínimo SIEMPRE es el aforo indicado por el fabricante (campo "aforo" del tubo).
+- Estudios de envío: siempre en un tubo/recipiente aparte.
+- Recipientes (orina, frascos, medios, jeringas, etc.): tipo "recipiente"; un recipiente por estudio,
+  salvo que compartan "muestraGrupo" (ej. "orina-24h").
+- SIMULADOR: selector URGENCIAS / ORDINARIA; cada tipo tiene su lista y solo permite agregar estudios de esa categoría.
+  Cuenta un tubo por (tubo + área); otra área con el mismo tubo = tubo extra.
+- SOLICITUD Y RECEPCIÓN: menú de criterios a la izquierda (botones agrupados) y la información a la derecha.
+  En celular: primero el menú, luego el detalle con botón "← Criterios".
+- Para agregar un analito: copiar datos/_plantilla_analito.js y registrarlo en datos/indice.js.
+
+- Pestaña LISTADO DE ANALITOS/PRUEBAS (entre SIMULADOR y SOLICITUD): dos botones (Estudios de urgencias / Estudios ordinarios) que despliegan todos los analitos con esa etiqueta; al tocar uno se abre su ficha.
+
+=== VERSIÓN 6: PERSONAL QUE TOMA LA MUESTRA ===
+- Cada analito tiene el campo  personal: "<perfil>"  (venosa, arterial, gaso, hemocultivo, hemocultivo-central,
+  liquido-estéril, dialisis, paciente, exudado, toma-invasiva). Los perfiles (quién, nota, nivel) están en datos/personal.js.
+- Se muestra en la ficha del analito y como etiqueta corta en el LISTADO.
+- Es una REFERENCIA basada en NOM-007-SSA3-2011, CLSI GP41/GP42/GP48/M47 y manuales de toma de muestras de otras
+  instituciones. No se encontró un documento público del IMSS por analito: validar con la normativa interna del HGR 36.
